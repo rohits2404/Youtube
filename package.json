@@ -8,6 +8,7 @@
         "start": "next start",
         "lint": "eslint",
         "tunnel": "ngrok http --url=candida-nonrepealable-sylas.ngrok-free.dev 3000",
+        "studio": "drizzle-kit studio",
         "dev:all": "mprocs"
     },
     "dependencies": {
@@ -17,6 +18,8 @@
         "@trpc/client": "^11.9.0",
         "@trpc/react-query": "^11.9.0",
         "@trpc/server": "^11.9.0",
+        "@upstash/ratelimit": "^2.0.8",
+        "@upstash/redis": "^1.36.2",
         "class-variance-authority": "^0.7.1",
         "client-only": "^0.0.1",
         "clsx": "^2.1.1",
