@@ -1,0 +1,6 @@
+procs:
+    tunnel:
+        cmd: ["bun", "run", "tunnel"]
+
+    next:
+        cmd: ["bun", "run", "dev"]
