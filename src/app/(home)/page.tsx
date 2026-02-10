@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic"
 
 import { HomeView } from "@/modules/home/ui/views/home-view";
 import { HydrateClient, trpc } from "@/trpc/server"
+import React from "react";
 
 interface HomeProps {
     searchParams: Promise<{
