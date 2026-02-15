@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { APP_URL } from "@/constants";
 import { ListPlusIcon, MoreVerticalIcon, ShareIcon, Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -12,7 +13,7 @@ interface Props {
 export const VideoMenu = ({ videoId, variant = "ghost", onRemove }: Props) => {
 
     const onShare = () => {
-        const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000"}/videos/${videoId}`;
+        const fullUrl = `${APP_URL}/videos/${videoId}`;
         navigator.clipboard.writeText(fullUrl);
         toast.success("Link Copied Successfully")
     }
