@@ -2,7 +2,6 @@
 
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { DEFAULT_LIMIT } from "@/constants";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCard, VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
 import { trpc } from "@/trpc/client";
@@ -46,8 +45,6 @@ const ResultSectionSkeleton = () => {
 
 const ResultSectionSuspense = ({ query, categoryId }: ResultSectionProps) => {
 
-    const isMobile = useIsMobile();
-
     const [result,resultQuery] = trpc.search.getMany.useSuspenseInfiniteQuery({ 
         query, categoryId, limit: DEFAULT_LIMIT 
     }, {
@@ -56,19 +53,16 @@ const ResultSectionSuspense = ({ query, categoryId }: ResultSectionProps) => {
 
     return (
         <>
-            {isMobile ? (
-                <div className="flex flex-col gap-4 gap-y-10">
-                    {result.pages.flatMap((page) => page.items).map((video) => (
-                        <VideoGridCard key={video.id} data={video} />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex flex-col gap-4">
-                    {result.pages.flatMap((page) => page.items).map((video) => (
-                        <VideoRowCard key={video.id} data={video} size={"default"} />
-                    ))}
-                </div>
-            )}
+            <div className="flex flex-col gap-4 gap-y-10 md:hidden">
+                {result.pages.flatMap((page) => page.items).map((video) => (
+                    <VideoGridCard key={video.id} data={video} />
+                ))}
+            </div>
+            <div className="hidden flex-col gap-4 md:flex">
+                {result.pages.flatMap((page) => page.items).map((video) => (
+                    <VideoRowCard key={video.id} data={video} size={"default"} />
+                ))}
+            </div>
             <InfiniteScroll
             hasNextPage={resultQuery.hasNextPage}
             isFetchingNextPage={resultQuery.isFetchingNextPage}
