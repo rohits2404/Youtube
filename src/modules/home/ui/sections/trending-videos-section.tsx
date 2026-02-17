@@ -1,18 +1,18 @@
 "use client"
 
+import { AppErrorBoundary } from "@/components/error-boundary";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 export const TrendingVideosSection = () => {
     return (
         <Suspense fallback={<TrendingVideosSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Trending Videos" fullScreen>
                 <TrendingVideosSectionSuspense />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

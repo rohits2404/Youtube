@@ -1,20 +1,20 @@
 "use client";
 
+import { AppErrorBoundary } from "@/components/error-boundary";
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { trpc } from "@/trpc/client"
 import { Trash2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Suspense } from "react"
-import { ErrorBoundary } from "react-error-boundary"
 import { toast } from "sonner"
 
 export const PlaylistHeaderSection = ({ playlistId }: { playlistId: string }) => {
     return (
         <Suspense fallback={<PlaylistHeaderSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Playlist" fullScreen>
                 <PlaylistHeaderSectionSuspense playlistId={playlistId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

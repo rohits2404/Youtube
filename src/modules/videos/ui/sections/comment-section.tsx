@@ -1,5 +1,6 @@
 "use client"
 
+import { AppErrorBoundary } from "@/components/error-boundary"
 import { InfiniteScroll } from "@/components/InfiniteScroll"
 import { DEFAULT_LIMIT } from "@/constants"
 import { CommentForm } from "@/modules/comments/ui/components/comment-form"
@@ -7,14 +8,13 @@ import { CommentItem } from "@/modules/comments/ui/components/comment-item"
 import { trpc } from "@/trpc/client"
 import { Loader2Icon } from "lucide-react"
 import { Suspense } from "react"
-import { ErrorBoundary } from "react-error-boundary"
 
 export const CommentSection = ({ videoId }: { videoId: string }) => {
     return (
         <Suspense fallback={<CommentSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Comments" fullScreen>
                 <CommentSectionSuspense videoId={videoId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

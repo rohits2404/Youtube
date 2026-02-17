@@ -9,16 +9,16 @@ import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { Globe2Icon, LockIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 export const VideosSection = () => {
     return (
         <Suspense fallback={<VideosSectionSkeleton />}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Videos" fullScreen>
                 <VideosSectionSuspense />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

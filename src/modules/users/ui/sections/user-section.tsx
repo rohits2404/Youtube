@@ -2,10 +2,10 @@
 
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { UserPageBanner, UserPageBannerSkeleton } from "../components/user-page-banner";
 import { UserPageInfo, UserPageInfoSkeleton } from "../components/user-page-info";
 import { Separator } from "@/components/ui/separator";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 interface UserSectionProps {
     userId: string;
@@ -14,9 +14,9 @@ interface UserSectionProps {
 export const UserSection = ({ userId }: UserSectionProps) => {
     return (
         <Suspense fallback={<UserSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading User" fullScreen>
                 <UserSectionSuspense userId={userId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

@@ -1,10 +1,10 @@
 "use client";
 
+import { AppErrorBoundary } from "@/components/error-boundary";
 import { FilterCarousel } from "@/components/filter-carousel";
 import { trpc } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 interface CategoriesSectionProps {
     categoryId?: string;
@@ -56,9 +56,9 @@ export const CategoriesSection = ({ categoryId }: CategoriesSectionProps) => {
         <Suspense 
         fallback={<CategoriesSkeleton />}
         >
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Category" fullScreen>
                 <CategoriesSectionSuspense categoryId={categoryId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

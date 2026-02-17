@@ -5,16 +5,16 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { toast } from "sonner";
 import { SubscriptionItem, SubscriptionItemSkeleton } from "../components/subscription-item";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 export const SubscriptionsVideosSection = () => {
     return (
         <Suspense fallback={<SubscriptionsVideosSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Subscription Videos" fullScreen>
                 <SubscriptionsVideosSectionSuspense />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }
@@ -56,7 +56,7 @@ const SubscriptionsVideosSectionSuspense = () => {
         <>
             <div className="flex flex-col gap-4">
                 {subscriptions.pages.flatMap((page) => page.items).map((subscription) => (
-                    <Link
+                    <Link prefetch
                     href={`/users/${subscription.user.id}`} 
                     key={subscription.creatorId}
                     >

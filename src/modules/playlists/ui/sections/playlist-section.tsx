@@ -4,15 +4,15 @@ import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { PlaylistGridCard, PlaylistGridCardSkeleton } from "../components/playlist-grid-card";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 export const PlaylistSection = () => {
     return (
         <Suspense fallback={<PlaylistSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Playlist" fullScreen>
                 <PlaylistSectionSuspense />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

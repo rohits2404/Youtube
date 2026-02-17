@@ -7,7 +7,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { trpc } from "@/trpc/client";
 import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, Loader2Icon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from "lucide-react";
 import { Suspense, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import { videoUpdateSchema } from "@/db/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -24,6 +23,7 @@ import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
 import { Skeleton } from "@/components/ui/skeleton";
 import { APP_URL } from "@/constants";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 interface FormSectionProps {
     videoId: string;
@@ -32,9 +32,9 @@ interface FormSectionProps {
 export const FormSection = ({ videoId }: FormSectionProps) => {
     return (
         <Suspense fallback={<FormSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Form" fullScreen>
                 <FormSectionSuspense videoId={videoId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }
@@ -398,7 +398,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                                                 Video Link
                                             </p>
                                             <div className="flex items-center gap-x-2">
-                                                <Link href={`/videos/${video.id}`}>
+                                                <Link prefetch href={`/videos/${video.id}`}>
                                                     <p className="line-clamp-1 text-sm text-blue-500">
                                                         {fullUrl}
                                                     </p>

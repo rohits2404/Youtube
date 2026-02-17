@@ -1,19 +1,19 @@
 "use client"
 
+import { AppErrorBoundary } from "@/components/error-boundary";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCard, VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 export const HistoryVideosSection = () => {
     return (
         <Suspense fallback={<HistoryVideosSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading History" fullScreen>
                 <HistoryVideosSectionSuspense />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

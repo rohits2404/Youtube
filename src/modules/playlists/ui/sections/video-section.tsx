@@ -1,12 +1,12 @@
 "use client"
 
+import { AppErrorBoundary } from "@/components/error-boundary";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCard, VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { toast } from "sonner";
 
 interface Props {
@@ -16,9 +16,9 @@ interface Props {
 export const VideoSection = ({ playlistId }: Props) => {
     return (
         <Suspense fallback={<VideoSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Videos" fullScreen>
                 <VideoSectionSuspense playlistId={playlistId} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }

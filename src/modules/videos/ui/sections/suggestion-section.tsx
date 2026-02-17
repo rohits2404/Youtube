@@ -6,7 +6,7 @@ import { VideoRowCard, VideoRowCardSkeleton } from "../components/video-row-card
 import { VideoGridCard } from "../components/video-grid-card";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { AppErrorBoundary } from "@/components/error-boundary";
 
 interface Props {
     videoId: string;
@@ -16,9 +16,9 @@ interface Props {
 export const SuggestionSection = ({ videoId, isManual }: Props) => {
     return (
         <Suspense fallback={<SuggestionSectionSkeleton/>}>
-            <ErrorBoundary fallback={<p>Error...</p>}>
+            <AppErrorBoundary title="Error Loading Suggestion" fullScreen>
                 <SuggestionSectionSuspense videoId={videoId} isManual={isManual} />
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </Suspense>
     )
 }
