@@ -13,7 +13,7 @@ export const BannerUploadModal = ({ userId, open, onOpenChange }: BannerUploadMo
     const utils = trpc.useUtils();
 
     const onUploadComplete = () => {
-        utils.studio.getOne.invalidate({ id: userId });
+        utils.users.getOne.invalidate({ id: userId });
         onOpenChange(false);
     }
 
