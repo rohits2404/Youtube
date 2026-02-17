@@ -91,11 +91,14 @@ export const videosRouter = createTRPCRouter({
         };
     }),
 
-    getMany: baseProcedure.input(z.object({ categoryId: z.uuid().nullish(), cursor: z.object({
-        id: z.uuid(),
-        updatedAt: z.date()
+    getMany: baseProcedure.input(z.object({ 
+        categoryId: z.uuid().nullish(), 
+        userId: z.uuid().nullish() , 
+        cursor: z.object({
+            id: z.uuid(),
+            updatedAt: z.date()
     }).nullish(), limit: z.number().min(1).max(100)})).query(async ({ input }) => {
-        const { cursor, limit, categoryId } = input;
+        const { cursor, limit, categoryId, userId } = input;
         const data = await db.select({
             ...getTableColumns(videos),
             user: users,
@@ -110,6 +113,7 @@ export const videosRouter = createTRPCRouter({
             ))
         }).from(videos).innerJoin(users, eq(videos.userId, users.id)).where(and(
             eq(videos.visibility,"public"),
+            userId ? eq(videos.userId, userId) : undefined,
             categoryId ? eq(videos.categoryId, categoryId) : undefined,
             cursor ? or(lt(videos.updatedAt, cursor.updatedAt), and(
                 eq(videos.updatedAt, cursor.updatedAt),
