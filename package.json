@@ -6,8 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "eslint",
-        "studio": "drizzle-kit studio"
+        "lint": "eslint"
     },
     "dependencies": {
         "@ai-sdk/google": "^3.0.24",
